@@ -1,5 +1,5 @@
 const cleanDb = async (db) => {
-    await db.Author.remove({});
-    await db.Post.remove({});
+    await db.User.destroy({ where: {}, truncate: true })
+    await db.Booking.destroy({ where: {}, truncate: true })
 }
 module.exports = cleanDb

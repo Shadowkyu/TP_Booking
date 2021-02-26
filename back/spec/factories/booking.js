@@ -3,7 +3,7 @@ const adapter = new factoryGirl.SequelizeAdapter()
 factory = factoryGirl.factory
 factory.setAdapter(adapter)
 
-const Booking = require('../../models/old_booking')
+const Booking = require('../../models/booking')
 
 factory.define('booking', Booking, {
     googleId: factory.sequence((n) => `googleId${n}`),

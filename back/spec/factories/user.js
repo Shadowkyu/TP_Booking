@@ -3,9 +3,10 @@ const adapter = new factoryGirl.SequelizeAdapter()
 factory = factoryGirl.factory
 factory.setAdapter(adapter)
 
-const User = require('../../models/old_user')
+const User = require('../../models').User
 
 factory.define('user', User, {
     displayName: factory.sequence((n) => `displayName${n}`),
-    email: factory.sequence((n) => `email${n}`),
+    email: factory.sequence((n) => n % 2 ? 'test@client.com' : 'test@employee.com'),
+    isClient: factory.sequence((n) => n % 2)
 })
