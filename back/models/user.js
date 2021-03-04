@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     displayName: DataTypes.STRING,
     email: DataTypes.STRING,
     isClient: DataTypes.BOOLEAN
-  }, {})
+  })
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.Post)
-  // }
+  User.associate = (models) => {
+    User.belongsToMany(models.Booking, { through: 'Bookings_User', as: 'userbookings' });
+  }
   return User
 }
