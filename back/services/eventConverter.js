@@ -15,62 +15,27 @@ module.exports.EventConverter = class EventConverter {
     }
 
     /**
-     * 
      * @param {any[]} users 
      */
     async createBooking(users) {
         const booking = await db.Booking.create(this.toHash)
-        // console.log("aze", booking)
-        for (const user of users) {
-            booking.addBookingusers(user.id)
-        }
+
+        for (const user of users)
+            await booking.addUsers(user.id)
 
         await booking.save()
 
-        // return db.Booking.findByPk(booking.id, {
-        //     include: [
-        //         {
-        //             association: db.Bookings_User
-        //         }
-        //     ]
-        // }
-        // )
-        // console.log("aeaze", booking)
-        // return  db.Booking.findAll( { include: [{ model:  db.User, include: [{association: 'bookingsuser'}] }]} )
-        // console.log(db.User.findAll({where}))
-        return db.Booking.findByPk(booking.id, {
-            include: [
-                {
-                    model: db.User,
-                    as: "bookingusers",
-                    // where: { bookingid: booking.id }
-                    // attributes: ["id", "displayName"],
-                    // through: {
-                    //   attributes: ["sdqdqsd"],
-                    // }
-                    attributes: ["id", "displayName"],
-                    // through: {
-                    //     attributes: ["tag_id", "tutorial_id"],
-                    // },
-                },
-            ],
-        })
-        return db.Booking.findAll({
-            // where: { id: booking.id },
-            include: {
-                model: db.User,
-                attributes: ['displayName']
-                // through: { attributes: [
-                //     'displayName'
-                // ] }
+        return await db.Booking.findByPk(
+            booking.id,
+            {
+                include: [
+                    {
+                        model: db.User,
+                        as: "users"
+                    }
+                ],
             }
-            // include: [ db.Booking.Bookings_User ]
-            // include: [{
-            //     through: 'Bookings_User',
-            //   model: db.User.Bookings_User,
-            // //   through: 'Bookings_User',
-            // }]
-        })
+        )
     }
 
     get endDate() {

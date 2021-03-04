@@ -18,8 +18,7 @@ module.exports = {
             model: 'Bookings',
             key: 'id'
           },
-          onDelete: 'cascade',
-          // as: 'bookingsuser'
+          onDelete: 'cascade'
         },
         UserId: {
           type: Sequelize.INTEGER,
@@ -27,8 +26,7 @@ module.exports = {
             model: 'Users',
             key: 'id'
           },
-          onDelete: 'cascade',
-          // as: 'bookingsuser'
+          onDelete: 'cascade'
         },
       }
     );

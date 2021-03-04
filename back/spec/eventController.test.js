@@ -54,28 +54,30 @@ describe('About EventConvert', () => {
         expect(eventConverter.googleId).toEqual('MGptdjJ1ZDljMWo3Y2kyZzFqZ21ybWY2c3Mgbmlja0BnZW1iYW5pLmNvbQ')
     })
 
-    test('Create booking with good payload', async () => {
-        //TODO create users
-        //TODO get users by payload email
+    test('Email client/employee should be valid', async () => {
         await factory.createMany('user', 5)
-        const emailClients = eventConverter.emailClients
-        const emailEmployees = eventConverter.emailEmployees
 
-        expect(emailClients?.length).toBeGreaterThan(0)
-        expect(emailEmployees?.length).toBeGreaterThan(0)
+        expect(eventConverter.emailClients?.length).toBeGreaterThan(0)
+        expect(eventConverter.emailEmployees?.length).toBeGreaterThan(0)
+    })
 
-        const userClient = await userDao.getClientUsers(emailClients)
-        const userEmployee = await userDao.getEmployeeUsers(emailEmployees)
-        
-        expect(userClient?.length).toBeGreaterThan(0)
-        expect(userEmployee?.length).toBeGreaterThan(0)
+    test('Email client/employee should be foudn in db', async () => {
+        await factory.createMany('user', 5)
 
-        const booking = await eventConverter.createBooking([...userClient, ...userEmployee])
+        expect((await userDao.getClientUsers(eventConverter.emailClients))?.length).toBeGreaterThan(0)
+        expect((await userDao.getEmployeeUsers(eventConverter.emailEmployees))?.length).toBeGreaterThan(0)
+    })
 
-        console.log(JSON.stringify(booking))
+    test('Create booking with good payload', async () => {
+        await factory.createMany('user', 5)
+
+        const booking = await eventConverter.createBooking([
+            ...(await userDao.getClientUsers(eventConverter.emailClients)),
+            ...(await userDao.getEmployeeUsers(eventConverter.emailEmployees))
+        ])
 
         expect(booking).not.toBeNull()
-        expect(booking.bookingusers).toBeGreaterThan(0)
+        expect(booking.users.length).toBeGreaterThan(0)
     })
 })
 
