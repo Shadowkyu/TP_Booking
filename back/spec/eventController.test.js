@@ -1,4 +1,7 @@
 const { EventConverter } = require("../services/EventConverter")
+const db = require('../models')
+const { factory } = require('factory-girl')
+const cleanDb = require("./helpers/cleanDb")
 
 describe('About EventConvert', () => {
     let eventConverter
@@ -41,4 +44,13 @@ describe('About EventConvert', () => {
     test('Google id should be valid', async () => {
         expect(eventConverter.googleId).toEqual('MGptdjJ1ZDljMWo3Y2kyZzFqZ21ybWY2c3Mgbmlja0BnZW1iYW5pLmNvbQ')
     })
+
+    test('Create booking with good payload', async () => {
+
+        expect(bookings.length).toBeGreaterThan(0);
+    })
+})
+
+afterAll(async () => {
+    await cleanDb(db)
 })

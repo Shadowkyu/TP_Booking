@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     isClient: DataTypes.BOOLEAN
   }, {})
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.Post)
-  // }
+  User.associate = (models) => {
+    User.belongsToMany(Booking, { through: 'Bookings_User' });
+  }
   return User
 }

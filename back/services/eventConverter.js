@@ -1,5 +1,6 @@
 const { UserDAO } = require("./userDao")
 
+
 module.exports.EventConverter = class EventConverter {
     payload = {}
 
@@ -8,9 +9,9 @@ module.exports.EventConverter = class EventConverter {
         this.userDao = new UserDAO()
     }
 
-    // async get client() {
-    //     await this.userDao.getClientUsers()
-    // }
+    async createBooking() {
+        return await db.Booking.create(this.toHash).dataValues
+    }
 
     get endDate() {
         return new Date(this.payload.end)
@@ -18,6 +19,10 @@ module.exports.EventConverter = class EventConverter {
 
     get startDate() {
         return new Date(this.payload.start)
+    }
+
+    get email() {
+        return this.payload.attendees.email
     }
 
     get googleId() {
