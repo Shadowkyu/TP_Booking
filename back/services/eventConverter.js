@@ -25,7 +25,7 @@ module.exports.EventConverter = class EventConverter {
 
         await booking.save()
 
-        return await db.Booking.findByPk(
+        return db.Booking.findByPk(
             booking.id,
             {
                 include: [

@@ -1,20 +1,20 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "root",
     "database": "tp_booking",
     "host": "localhost",
-    "port": 3306,
+    "port": 8889,
     "dialect": "mysql",
     "operatorsAliases": "false",
     "logging": false
   },
   "test": {
     "username": "root",
-    "password": "",
+    "password": "root",
     "database": "tp_booking",
     "host": "localhost",
-    "port": 3306,
+    "port": 8889,
     "dialect": "mysql",
     "operatorsAliases": "false",
     "logging": false
